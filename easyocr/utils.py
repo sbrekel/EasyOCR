@@ -861,7 +861,7 @@ def set_result_with_confidence_rotation(results):
     for col_ix in range(len(results[0])):
         # Check if the not rotated element is of number form
         print(results[0][col_ix][1])
-        if is_mostly_numbers(results[0][col_ix][1]) and len(results[0][col_ix][1])==1:
+        if is_mostly_numbers(results[0][col_ix][1]) and len(results[0][col_ix][1])>1:
             final_result.append(results[best_row][col_ix])
             continue
 
