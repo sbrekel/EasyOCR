@@ -872,3 +872,17 @@ def set_result_with_confidence_rotation(results):
         final_result.append(results[best_row][col_ix])
 
     return final_result
+
+def is_mostly_numbers(input_string):
+    if not input_string:
+        return False
+
+    # Count the number of digits in the string
+    digit_count = sum(1 for char in input_string if char.isdigit())
+
+    # Calculate the percentage of digits in the string
+    percentage_digits = (digit_count / len(input_string)) * 100
+
+    # Check if the percentage of digits is at least 50%
+    return percentage_digits >= 75
+
