@@ -4,7 +4,7 @@ from .recognition import get_recognizer, get_text
 from .utils import group_text_box, get_image_list, calculate_md5, get_paragraph,\
                    download_and_unzip, printProgressBar, diff, reformat_input,\
                    make_rotated_img_list, set_result_with_confidence,\
-                   reformat_input_batched, merge_to_free
+                   reformat_input_batched, merge_to_free, set_result_with_confidence_rotation
 from .config import *
 from bidi.algorithm import get_display
 import numpy as np
@@ -408,7 +408,7 @@ class Reader(object):
             if rotation_info and (horizontal_list+free_list):
                 # Reshape result to be a list of lists, each row being for 
                 # one of the rotations (first row being no rotation)
-                result = set_result_with_confidence(
+                result = set_result_with_confidence_rotation(
                     [result[image_len*i:image_len*(i+1)] for i in range(len(rotation_info) + 1)])
 
         if self.model_lang == 'arabic':
