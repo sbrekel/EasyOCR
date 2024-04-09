@@ -833,3 +833,42 @@ def set_result_with_confidence(results):
         final_result.append(results[best_row][col_ix])
 
     return final_result
+    
+def make_rotated_img_list(rotationInfo, img_list):
+    result_img_list = img_list[:]
+
+    # add rotated images to original image_list
+    max_ratio = 1
+
+    for angle in rotationInfo:
+        for img_info in img_list:
+            rotated = ndimage.rotate(img_info[1], angle, reshape=True)
+            height, width = rotated.shape
+            ratio = calculate_ratio(width, height)
+            max_ratio = max(max_ratio, ratio)
+            result_img_list.append((img_info[0], rotated))
+    return result_img_list
+
+def set_result_with_confidence_rotation(results):
+    """ Select highest confidence augmentation for TTA
+    Given a list of lists of results (outer list has one list per augmentation,
+    inner lists index the images being recognized), choose the best result
+    according to confidence level.
+    Each "result" is of the form (box coords, text, confidence)
+    A final_result is returned which contains one result for each image
+    """
+    final_result = []
+    for col_ix in range(len(results[0])):
+        # Check if the not rotated element is of number form
+        if is_mostly_numbers(results[0][col_ix][1]):
+            print(results[0][col_ix][1])
+            final_result.append(results[best_row][col_ix])
+            continue
+
+        # Take the row_ix associated with the max confidence
+        best_row = max(
+            [(row_ix, results[row_ix][col_ix][2]) for row_ix in range(len(results))],
+            key=lambda x: x[1])[0]
+        final_result.append(results[best_row][col_ix])
+
+    return final_result
