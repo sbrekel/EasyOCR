@@ -875,9 +875,7 @@ def set_result_with_confidence_rotation(results):
     return final_result
     
 def likely_alpha(results,col_ix):
-    print('OK')
     for row_ix in range(len(results)):
-        print(results[row_ix][col_ix])
         if is_mostly_alpha(results[row_ix][col_ix][1]) and len(results[row_ix][col_ix][1])>2:   # and results[row_ix][col_ix][2]>0.5:
             return results[row_ix][col_ix]
     return None
