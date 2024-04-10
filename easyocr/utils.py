@@ -862,7 +862,7 @@ def set_result_with_confidence_rotation(results):
         # Create list with row index, confidence score pairs
         confidence_vals = [(row_ix, results[row_ix][col_ix][2], results[row_ix][col_ix][1]) for row_ix in range(len(results))]
         #Introduce bias towards original rotation
-        confidence_vals[0] = (0, results[0][col_ix][2] + 0.1)
+        confidence_vals[0] = (0, results[0][col_ix][2] + 0.1,results[0][col_ix][1])
         print(confidence_vals)
         # Take the row_ix associated with the max confidence
         best_row = max(confidence_vals,key=lambda x: x[1])[0]
