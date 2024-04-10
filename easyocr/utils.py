@@ -858,8 +858,8 @@ def set_result_with_confidence_rotation(results):
     A final_result is returned which contains one result for each image
     """
     final_result = []
+    print(results)
     for col_ix in range(len(results[0])):
-    
         # Take the row_ix associated with the max confidence
         confidence_vals = [(row_ix, results[row_ix][col_ix][2]) for row_ix in range(len(results))]
         #Introduce bias towards original rotation
