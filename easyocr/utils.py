@@ -859,7 +859,7 @@ def set_result_with_confidence_rotation(results):
     """
     final_result = []
     for col_ix in range(len(results[0])):
-        print(results)
+        print(results[:][col_ix])
         # Create list with row index, confidence score pairs
         confidence_vals = [(row_ix, results[row_ix][col_ix][2]) for row_ix in range(len(results))]
         #Introduce bias towards original rotation
