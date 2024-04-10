@@ -859,12 +859,12 @@ def set_result_with_confidence_rotation(results):
     """
     final_result = []
     for col_ix in range(len(results[0])):
-        #Introduce bias towards original rotation
-        results[0][col_ix][2] = results[0][col_ix][2] + 0.1
+    
         # Take the row_ix associated with the max confidence
-        best_row = max(
-            [(row_ix, results[row_ix][col_ix][2]) for row_ix in range(len(results))],
-            key=lambda x: x[1])[0]
+        confidence_vals = [(row_ix, results[row_ix][col_ix][2]) for row_ix in range(len(results))]
+        #Introduce bias towards original rotation
+        confidence_vals[0][1] = confidence_vals[0][1]+0.1
+        best_row = max(confidence_vals,key=lambda x: x[1])[0]
         final_result.append(results[best_row][col_ix])
 
     return final_result
