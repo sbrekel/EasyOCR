@@ -859,14 +859,33 @@ def set_result_with_confidence_rotation(results):
     """
     final_result = []
     for col_ix in range(len(results[0])):
+        if is_mostly_numbers(results[0][col_ix][1]) and len(results[0][col_ix][1])>1:
+            final_result.append(results[0][col_ix])
+            continue
+
+            
+        
         # Create list with row index, confidence score pairs
         confidence_vals = [(row_ix, results[row_ix][col_ix][2], results[row_ix][col_ix][1]) for row_ix in range(len(results))]
         #Introduce bias towards original rotation
-        confidence_vals[0] = (0, results[0][col_ix][2] + 0.1,results[0][col_ix][1])
-        print(confidence_vals)
+        #confidence_vals[0] = (0, results[0][col_ix][2] + 0.1,results[0][col_ix][1])
+        #print(confidence_vals)
         # Take the row_ix associated with the max confidence
         best_row = max(confidence_vals,key=lambda x: x[1])[0]
         final_result.append(results[best_row][col_ix])
 
     return final_result
+
+def is_mostly_numbers(input_string):
+    if not input_string:
+        return False
+
+    # Count the number of digits in the string
+    digit_count = sum(1 for char in input_string if char.isdigit())
+
+    # Calculate the percentage of digits in the string
+    percentage_digits = (digit_count / len(input_string)) * 100
+
+    # Check if the percentage of digits is at least 90%
+    return percentage_digits >= 70
 
